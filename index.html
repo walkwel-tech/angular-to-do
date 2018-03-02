@@ -3,36 +3,62 @@
 
 <head>
     <title>To Do App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 </head>
 
 <body>
-    <h1>My To-do List</h1>
-    <h2>Tasks</h2>
-
     <div class="container">
-        <div ng-if="tasks.length>0" class="section">
-            <button ng-click="toggleSelection()">{{selectedAll ? 'Unselect All' : 'Select All'}}</button>
-            <button ng-click="deleteAll()">Delete All</button>
-            <button ng-if="selectedTasksCount" ng-click="deleteSelected()">Deleted Selected</button>
-            <p ng-if="selectedTasksCount">{{selectedTasksCount}} Selected</p>
+        <div class="row align-center">
+            <div class="col-md-10">
+                <div class="box box-aqua">
+                    <div class="box-header ui-sortable-handle" style="cursor: move;">
+                        <i class="ion ion-clipboard"></i>
+                        <h3 class="box-title">To Do List</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row m-2" ng-if="tasks.length>0">
+                            <button type="button" class="btn btn-dark mx-1" ng-click="toggleSelection()">{{selectedAll ? 'Unselect All' : 'Select All'}}</button>
+                            <button type="button" class="btn btn-danger mx-1" ng-click="deleteAll()">Delete All</button>
+                            <button type="button" class="btn btn-danger ml-4" ng-if="selectedTasksCount" ng-click="deleteSelected()">Deleted Selected ({{selectedTasksCount}})</button>
+                        </div>
+                        <ul class="todo-list ui-sortable">
+                            <li ng-repeat="task in tasks">
+                                <span class="handle ui-sortable-handle">
+                                    {{$index+1}}.
+                                </span>
+                                <input type="checkbox" ng-model="task.checked" ng-click="selectTask( $event, task)" />
+                                <span class="text">{{ task.text }}</span>
+                                <small class="label label-success">
+                                    <i class=" fa fa-clock-o "></i>
+                                    {{task.id | date:"h:mm:ss a "}}
+                                </small>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="box-footer clearfix no-border ">
+                        <form class="row " ng-submit="addTask() ">
+                            <div class="col-md-10 ">
+                                <input type="text " placeholder="Task Description " ng-model="newTaskName " class="form-control " required>
+                            </div>
+                            <div class="col-md-2 ">
+                                <button type="submit " class="btn btn-primary ">
+                                    <i class="fa fa-plus "></i>
+                                    Add Task
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3>Total tasks {{ tasks.length }}</h3>
-        <div ng-repeat="task in tasks">
-            <input type="checkbox" ng-model="task.checked" ng-click="selectTask( $event, task)" /> {{ task.text }}
-            <br />
-        </div>
-        <h2>Add a Task</h2>
-        <form ng-submit="addTask()">
-            <input type="text" placeholder="Description" ng-model="newTaskName" />
-            <input type="submit" value="Add" />
-        </form>
-        <div ng-if="message" class="error">
-            <p>{{message}}</p>
-        </div>
-    </div>
-    <script src="./assets/js/todo-controller.js"></script>
+        <script src="./assets/js/todo-controller.js "></script>
 </body>
 
 </html>

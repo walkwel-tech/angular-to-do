@@ -11,14 +11,10 @@ angular.module('toDoApp', []).controller('toDoController', [
     $scope.selectedTasksCount = 0;
     $scope.selectedAll = false;
     $scope.newTaskName = '';
-    $scope.message = '';
 
     $scope.addTask = () => {
       const name = $scope.newTaskName;
-      if (name === '') {
-        $scope.message = 'Please enter a task.';
-      } else {
-        $scope.message = '';
+      if (name) {
         $scope.tasks.push({
           id: Date.now(),
           text: name,
