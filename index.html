@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="toDoApp" ng-controller="toDoController">
+
+<head>
+    <title>To Do App</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+
+<body>
+    <h1>My To-do List</h1>
+    <h2>Tasks</h2>
+
+    <div class="container">
+        <div ng-if="tasks.length>0" class="section">
+            <button ng-click="toggleSelection()">{{selectedAll ? 'Unselect All' : 'Select All'}}</button>
+            <button ng-click="deleteAll()">Delete All</button>
+            <button ng-if="selectedTasksCount" ng-click="deleteSelected()">Deleted Selected</button>
+            <p ng-if="selectedTasksCount">{{selectedTasksCount}} Selected</p>
+        </div>
+        <h3>Total tasks {{ tasks.length }}</h3>
+        <div ng-repeat="task in tasks">
+            <input type="checkbox" ng-model="task.checked" ng-click="selectTask( $event, task)" /> {{ task.text }}
+            <br />
+        </div>
+        <h2>Add a Task</h2>
+        <form ng-submit="addTask()">
+            <input type="text" placeholder="Description" ng-model="newTaskName" />
+            <input type="submit" value="Add" />
+        </form>
+        <div ng-if="message" class="error">
+            <p>{{message}}</p>
+        </div>
+    </div>
+    <script src="./assets/js/todo-controller.js"></script>
+</body>
+
+</html>
